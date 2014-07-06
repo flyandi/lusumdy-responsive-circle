@@ -1,0 +1,130 @@
+<!--
+Copyright (c) 2014 Lusumdy 
+All rights reserved
+-->
+
+<!--
+`lusumdy-responsive-circle` contains a responsive circle that can react 
+on different events and can be animated with different colors and sizes.
+
+    <lusumdy-responsive-circle></lusumdy-responsive-circle>
+
+@group Lusumdy Components
+@element lusumdy-responsive-circle
+@homepage lusumdy.com/components
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="lusumdy-responsive-circle">
+  <template>
+    <style>
+      :host {
+        position:relative;
+        display:block;
+        width:100%;
+        height:100%;
+
+      }
+
+      circle {
+          position:absolute;
+          top:50%;
+          left:50%;
+          display: block;
+          border-radius: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          -webkit-transition: all 0.3s cubic-bezier(.4,0,.2,1);
+          -moz-transition: all 0.3s cubic-bezier(.4,0,.2,1);
+          -o-transition: all 0.3s cubic-bezier(.4,0,.2,1);
+          transition: all 0.3s cubic-bezier(.4,0,.2,1);
+          border:1vw solid #fff;
+      }
+
+      circle #content {
+        position:absolute;
+        font-size: calc(5em * 2vw);
+        color:#fff;
+        left:50%;
+        top:50%;
+        -webkit-transform: translate(-50%, -50%);
+      }
+    </style>
+  
+    <scope>
+    	<circle id="circle">
+        <div id="content">99</div>
+      </circle>
+    </scope>
+  </template>
+  <script>
+
+  	Polymer('lusumdy-responsive-circle', {
+
+      publish: {
+        /**
+         * 'color' specifies the base background color of the circle
+         *
+         * @attribute color
+         * @type string
+         * @default #ff5252
+         */
+        color: '#ff5252',
+
+        /** 
+          * 'textcolor' specifies the color of the text
+          *
+          * @attribute textcolor
+          * @type color
+          * @default 
+          */
+        textcolor: '#232323',
+
+        /** 
+          * 'john' is the coolest attribute ever
+          *
+          * @attribute john
+          * @type human
+          * @default john
+          */
+        john: 'john',
+
+
+        /** 
+          * 'size' specifies the size (width and height) of the circle
+          *  Needs to be percentage value from 0 to 100.
+          *
+          * @attribute size
+          * @type integer
+          #* @default 50
+          */
+        size: 50,
+      },
+
+      observe: {
+        'color size': 'update'
+      },
+
+
+      ready: function() {
+        window.addEventListener('resize', this.update.bind(this));
+
+        this.update();  
+      },
+
+      update: function() {
+
+        this.$.circle.style.backgroundColor = this.color;
+
+        this.$.content.textContent = this.size;
+    
+        this.$.circle.style.width = this.$.circle.style.height = Math.floor((this.size/100) * (this.offsetWidth > this.offsetHeight ? this.offsetHeight : this.offsetWidth)) + "px";
+      },
+
+
+  	});
+
+  </script>
+</polymer-element>

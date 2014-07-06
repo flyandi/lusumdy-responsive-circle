@@ -1,0 +1,7 @@
+{
+  "name": "lusumdy-responsive-circle",
+  "private": true,
+  "dependencies": {
+	"polymer": "Polymer/polymer#master"  	
+  }
+}

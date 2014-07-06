@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <title>lusumdy-responsive-circle</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="../platform/platform.js"></script>
+
+  <link rel="import" href="../font-roboto/roboto.html">
+  <link rel="import" href="lusumdy-responsive-circle.html">
+  <link rel="import" href="../paper-slider/paper-slider.html">
+  <link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
+
+  <style>
+    html, body {
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      margin: 0;
+      padding:0;
+    }
+
+    #container {
+      position:absolute;
+      top:2em;
+      left:2em;
+      right:2em;
+      bottom:2em;
+      background:#f1f1f1;
+
+    }
+
+
+  </style>
+
+</head>
+<body unresolved>
+
+  <div id="container">
+   <lusumdy-responsive-circle id="responsive-circle" size="0"></lusumdy-responsive-circle>
+  </div>
+  
+  <div align="center">
+    <paper-slider min="0" max="100" id="slider"></paper-slider>
+    <paper-toggle-button id="toggle"></paper-toggle-button>
+    <paper-toggle-button id="gps"></paper-toggle-button>
+  </div>
+
+  <script>
+
+    var circle = document.querySelector('#responsive-circle');
+  
+    var slider = document.querySelector('#slider');
+    slider.addEventListener('change', function() {
+      document.querySelector('#responsive-circle').size = slider.value;
+    });
+
+    var toggle = document.querySelector('#toggle');
+    toggle.addEventListener('change', function() {
+      document.querySelector('#responsive-circle').color = toggle.checked ? '#ff5252' : '#8bc34a';
+    });
+
+    window.addEventListener("deviceorientation", function(ev) {
+      if(document.querySelector('#gps').checked) {
+
+        circle.color = ev.gamma < 0 ? '#ff5252' : '#8bc34a';
+
+        circle.size = Math.ceil(Math.abs(ev.gamma)/5)*5;
+
+      }
+
+    }, true);
+
+  
+  </script>
+</body>
+</html>
